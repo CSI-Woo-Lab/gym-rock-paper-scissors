@@ -16,8 +16,8 @@ def eval_rock_paper_scissors_agent(agent, env: RockPaperScissorsBaseEnv, n_eval_
     for _ in range(n_eval_episode):
         done = False
         obs = env.reset()
-        while done:
-            action = agent.predict(obs)
+        while not done:
+            action, _state = agent.predict(obs)  # FIXME: SB3 agent interface
             obs, reward, done, _ = env.step(action)
             if reward > 0:
                 n_win += 1
