@@ -3,11 +3,11 @@ from gym_rock_paper_scissors.envs.rock_paper_scissors import RockPaperScissorsBa
 
 # TODO: test
 def eval_rock_paper_scissors_agent(agent, env: RockPaperScissorsBaseEnv, n_eval_episode=1000):
-    if type(env).__name__ == "RockPaperScissorsSequenceEnv":
+    if type(env).__name__ == "RockPaperScissorsSequencePolicyEnv":
         optimal_winning_rate = RockPaperScissorsSequencePolicyEnv.optimal_winning_rate
     elif type(env).__name__ == "RockPaperScissorsRandomPolicyEnv":
         optimal_winning_rate = RockPaperScissorsRandomPolicyEnv.optimal_winning_rate
-    elif type(env).__name__ == "RockPaperScissorsBiasedEnv":
+    elif type(env).__name__ == "RockPaperScissorsBiasedPolicyEnv":
         optimal_winning_rate = RockPaperScissorsBiasedPolicyEnv.optimal_winning_rate
     else:
         raise TypeError("env type is not matched")
