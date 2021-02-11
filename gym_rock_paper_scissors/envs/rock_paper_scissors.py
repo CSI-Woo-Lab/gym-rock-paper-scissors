@@ -16,7 +16,7 @@ class RockPaperScissorsBaseEnv(gym.Env):
 
     def step(self, action):
         info = {}
-        env_action = self.env_policy(self.prev_state)
+        env_action = self.env_policy(self.prev_obs)  # FIXME: concat prev_obs and prev_action
         if action == ROCK and env_action == SCISSORS:
             reward = 1
         elif action == SCISSORS and env_action == ROCK:
@@ -27,25 +27,24 @@ class RockPaperScissorsBaseEnv(gym.Env):
             reward = 0
         else:
             reward = -1
-        self.prev_state = env_action
+        self.prev_obs = env_action
         self.prev_action = action
         done = False if reward == 0 else True
-        obs = np.array([self.prev_action, self.prev_state])
-        return obs, reward, done, info
+        state = np.array([action, self.prev_obs])
+        return state, reward, done, info
 
     def reset(self):
-        self.prev_state = None
-        self.prev_action = None
-    
+        self.prev_obs = None
+
     def render(self, mode="human"):
         user = RENDER_MAP[self.prev_action]
-        computer = RENDER_MAP[self.prev_state]
+        computer = RENDER_MAP[self.prev_obs]
         print(
             "USER vs COMP\n",
             f" {user}  ||  {computer} ",
         )
 
-    def env_policy(self, state):
+    def env_policy(self, obs):
         """return env_action
         """
         raise NotImplementedError
@@ -53,27 +52,27 @@ class RockPaperScissorsBaseEnv(gym.Env):
 class RockPaperScissorsSequencePolicyEnv(RockPaperScissorsBaseEnv):
     """optimal winning rate: 1
     """
-    def env_policy(self, state):
-        if state == None:
+    def env_policy(self, obs):
+        if obs == None:
             env_action = PAPER
-        elif state[0] == ROCK:
+        elif obs == ROCK:
             env_action = PAPER
-        elif state[0] == PAPER:
+        elif obs == PAPER:
             env_action = SCISSORS
-        elif state[0] == SCISSORS:
+        elif obs == SCISSORS:
             env_action = ROCK
         return env_action
 
 class RockPaperScissorsRandomPolicyEnv(RockPaperScissorsBaseEnv):
     """optimal winning rate: 1/3
     """
-    def env_policy(self, state):
+    def env_policy(self, obs):
         return np.random.choice([ROCK, PAPER, SCISSORS])
 
 class RockPaperScissorsBiasedPolicyEnv(RockPaperScissorsBaseEnv):
     """optimal winning rate: 1/2
     """
-    def env_policy(self, state):
+    def env_policy(self, obs):
         return np.random.choice([ROCK, PAPER, SCISSORS], p=[0.5, 0.25, 0.25])
 
 class RockPaperScissorsRandomEnv(RockPaperScissorsBaseEnv):
@@ -82,6 +81,7 @@ class RockPaperScissorsRandomEnv(RockPaperScissorsBaseEnv):
 if __name__ == "__main__":
     env = RockPaperScissorsSequencePolicyEnv()
     env.reset()
-    obs, reward, done, info = env.step(np.random.choice([ROCK, PAPER, SCISSORS]))
-    env.render()
-    print(obs, reward, done, info)
+    for _ in range(5):
+        obs, reward, done, info = env.step(np.random.choice([ROCK, PAPER, SCISSORS]))
+        env.render()
+        print(obs, reward, done, info)
