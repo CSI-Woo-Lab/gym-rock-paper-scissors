@@ -76,6 +76,8 @@ class RockPaperScissorsBiasedPolicyEnv(RockPaperScissorsBaseEnv):
         return np.random.choice([ROCK, PAPER, SCISSORS], p=[0.5, 0.25, 0.25])
 
 class RockPaperScissorsRandomEnv(RockPaperScissorsBaseEnv):
+    """TODO: randomly change the computer policy in each episode
+    """
     pass
 
 if __name__ == "__main__":
