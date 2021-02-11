@@ -8,6 +8,7 @@ SCISSORS = 2
 RENDER_MAP = {0: "@", 1: "#", 2: "%"}
 
 class RockPaperScissorsBaseEnv(gym.Env):
+    optimal_winning_rate = None
     def __init__(self) -> None:
         self.action_space = spaces.Discrete(3)
 
@@ -50,8 +51,7 @@ class RockPaperScissorsBaseEnv(gym.Env):
         raise NotImplementedError
 
 class RockPaperScissorsSequencePolicyEnv(RockPaperScissorsBaseEnv):
-    """optimal winning rate: 1
-    """
+    optimal_winning_rate = 1
     def env_policy(self, obs):
         if obs == None:
             env_action = PAPER
@@ -64,14 +64,12 @@ class RockPaperScissorsSequencePolicyEnv(RockPaperScissorsBaseEnv):
         return env_action
 
 class RockPaperScissorsRandomPolicyEnv(RockPaperScissorsBaseEnv):
-    """optimal winning rate: 1/3
-    """
+    optimal_winning_rate = 1/3
     def env_policy(self, obs):
         return np.random.choice([ROCK, PAPER, SCISSORS])
 
 class RockPaperScissorsBiasedPolicyEnv(RockPaperScissorsBaseEnv):
-    """optimal winning rate: 1/2
-    """
+    optimal_winning_rate = 1/2
     def env_policy(self, obs):
         return np.random.choice([ROCK, PAPER, SCISSORS], p=[0.5, 0.25, 0.25])
 
