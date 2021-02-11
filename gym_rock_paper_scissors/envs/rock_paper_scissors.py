@@ -13,7 +13,7 @@ class RockPaperScissorsBaseEnv(gym.Env):
         self.action_space = spaces.Discrete(3)
 
         # previous user action, previous env action
-        self.observation_space = spaces.Tuple((spaces.Discrete(3), spaces.Discrete(3)))
+        self.observation_space = spaces.Discrete(4)
 
     def step(self, action):
         info = {}
@@ -31,11 +31,13 @@ class RockPaperScissorsBaseEnv(gym.Env):
         self.prev_obs = env_action
         self.prev_action = action
         done = False if reward == 0 else True
-        state = np.array([action, self.prev_obs])
-        return state, reward, done, info
+        # state = np.array([action, self.prev_obs])
+        obs = np.array([env_action])
+        return obs, reward, done, info
 
     def reset(self):
         self.prev_obs = None
+        return np.array([3])
 
     def render(self, mode="human"):
         user = RENDER_MAP[self.prev_action]
