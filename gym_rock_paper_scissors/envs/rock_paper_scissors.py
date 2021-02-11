@@ -19,6 +19,8 @@ class RockPaperScissorsBaseEnv(gym.Env):
         env_action = self.env_policy(self.prev_state)
         if action == ROCK and env_action == SCISSORS:
             reward = 1
+        elif action == SCISSORS and env_action == ROCK:
+            reward = -1
         elif env_action < action:
             reward = 1
         elif action == env_action:
@@ -80,6 +82,6 @@ class RockPaperScissorsRandomEnv(RockPaperScissorsBaseEnv):
 if __name__ == "__main__":
     env = RockPaperScissorsSequencePolicyEnv()
     env.reset()
-    obs, reward, done, info = env.step(0)
+    obs, reward, done, info = env.step(np.random.choice([ROCK, PAPER, SCISSORS]))
     env.render()
     print(reward)
