@@ -66,12 +66,12 @@ class RockPaperScissorsSequencePolicyEnv(RockPaperScissorsBaseEnv):
         return env_action
 
 class RockPaperScissorsRandomPolicyEnv(RockPaperScissorsBaseEnv):
-    optimal_winning_rate = 1/3
+    optimal_winning_rate = 1/2  # win + win after draw + ...
     def env_policy(self, obs):
         return np.random.choice([ROCK, PAPER, SCISSORS])
 
 class RockPaperScissorsBiasedPolicyEnv(RockPaperScissorsBaseEnv):
-    optimal_winning_rate = 1/2
+    optimal_winning_rate = 2/3  # win + win after draw + ...
     def env_policy(self, obs):
         return np.random.choice([ROCK, PAPER, SCISSORS], p=[0.5, 0.25, 0.25])
 
