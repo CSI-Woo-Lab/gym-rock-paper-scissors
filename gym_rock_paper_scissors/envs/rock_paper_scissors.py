@@ -54,9 +54,12 @@ class RockPaperScissorsBaseEnv(gym.Env):
 
 class RockPaperScissorsSequencePolicyEnv(RockPaperScissorsBaseEnv):
     optimal_winning_rate = 1
+    def __init__(self, start_with=PAPER) -> None:
+        super().__init__()
+        self.start_with = start_with
     def env_policy(self, obs):
         if obs == None:
-            env_action = PAPER
+            env_action = self.start_with
         elif obs == ROCK:
             env_action = PAPER
         elif obs == PAPER:
@@ -72,9 +75,16 @@ class RockPaperScissorsRandomPolicyEnv(RockPaperScissorsBaseEnv):
 
 class RockPaperScissorsBiasedPolicyEnv(RockPaperScissorsBaseEnv):
     optimal_winning_rate = 2/3  # win + win after draw + ...
+    def __init__(self, biased_by=ROCK) -> None:
+        super().__init__()
+        self.biased_by = biased_by
     def env_policy(self, obs):
-        return np.random.choice([ROCK, PAPER, SCISSORS], p=[0.5, 0.25, 0.25])
-
+        if self.biased_by == ROCK:
+            return np.random.choice([ROCK, PAPER, SCISSORS], p=[0.5, 0.25, 0.25])
+        if self.biased_by == PAPER:
+            return np.random.choice([ROCK, PAPER, SCISSORS], p=[0.25, 0.5, 0.25])
+        if self.biased_by == SCISSORS:
+            return np.random.choice([ROCK, PAPER, SCISSORS], p=[0.25, 0.25, 0.5])
 class RockPaperScissorsRandomEnv(RockPaperScissorsBaseEnv):
     """TODO: randomly change the computer policy in each episode
     """
