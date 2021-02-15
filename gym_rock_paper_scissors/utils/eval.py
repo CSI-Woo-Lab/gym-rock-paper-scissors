@@ -1,7 +1,7 @@
 from gym_rock_paper_scissors.envs.rock_paper_scissors import RockPaperScissorsBaseEnv, RockPaperScissorsRandomPolicyEnv, RockPaperScissorsSequencePolicyEnv, RockPaperScissorsRandomEnv, RockPaperScissorsBiasedPolicyEnv
 
 
-def eval_rock_paper_scissors_agent(agent, env: RockPaperScissorsBaseEnv, deterministic=True, n_eval_episode=1000):
+def eval_rock_paper_scissors_agent(agent, env: RockPaperScissorsBaseEnv, deterministic=False, n_eval_episode=1000):
     if type(env).__name__ == "RockPaperScissorsSequencePolicyEnv":
         optimal_winning_rate = RockPaperScissorsSequencePolicyEnv.optimal_winning_rate
     elif type(env).__name__ == "RockPaperScissorsRandomPolicyEnv":
