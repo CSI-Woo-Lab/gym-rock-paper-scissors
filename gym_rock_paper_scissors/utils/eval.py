@@ -1,7 +1,7 @@
 from gym_rock_paper_scissors.envs.rock_paper_scissors import RockPaperScissorsBaseEnv, RockPaperScissorsRandomPolicyEnv, RockPaperScissorsSequencePolicyEnv, RockPaperScissorsRandomEnv, RockPaperScissorsBiasedPolicyEnv
 
 
-def eval_rock_paper_scissors_agent(agent, env: RockPaperScissorsBaseEnv, n_eval_episode=1000):
+def eval_rock_paper_scissors_agent(agent, env: RockPaperScissorsBaseEnv, deterministic=True, n_eval_episode=1000):
     if type(env).__name__ == "RockPaperScissorsSequencePolicyEnv":
         optimal_winning_rate = RockPaperScissorsSequencePolicyEnv.optimal_winning_rate
     elif type(env).__name__ == "RockPaperScissorsRandomPolicyEnv":
@@ -16,7 +16,7 @@ def eval_rock_paper_scissors_agent(agent, env: RockPaperScissorsBaseEnv, n_eval_
         done = False
         obs = env.reset()
         while not done:
-            action, _state = agent.predict(obs)  # FIXME: SB3 agent interface
+            action, _state = agent.predict(obs, deterministic=deterministic)  # FIXME: SB3 DQN agent interface
             obs, reward, done, _ = env.step(action)
             if reward > 0:
                 n_win += 1
