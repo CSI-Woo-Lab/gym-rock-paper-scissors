@@ -160,9 +160,9 @@ class RockPaperScissorsSequencePolicy2Env(RockPaperScissorsBaseEnv):
 
 
 if __name__ == "__main__":
-    env = RockPaperScissorsSequencePolicyEnv()
+    env = RockPaperScissorsSequencePolicy2Env(other_sequence=True, double_with=SCISSORS)
     env.reset()
-    for _ in range(5):
+    for _ in range(10):
         obs, reward, done, info = env.step(
             np.random.choice([ROCK, PAPER, SCISSORS]))
         env.render()
