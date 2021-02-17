@@ -8,7 +8,7 @@ def eval_rock_paper_scissors_agent(agent, env: RockPaperScissorsBaseEnv, determi
         optimal_winning_rate = RockPaperScissorsRandomPolicyEnv.optimal_winning_rate
     elif type(env).__name__ == "RockPaperScissorsBiasedPolicyEnv":
         optimal_winning_rate = RockPaperScissorsBiasedPolicyEnv.optimal_winning_rate
-    elif type(env).__name__ == "RockPaperScissorsSequencePolicyEnv":
+    elif type(env).__name__ == "RockPaperScissorsSequencePolicy2Env":
         optimal_winning_rate = RockPaperScissorsSequencePolicy2Env.optimal_winning_rate
     else:
         raise TypeError("env type is not matched")
