@@ -18,3 +18,8 @@ register(
     id="RockPaperScissorsBiasedPolicyEnv-v0",
     entry_point="gym_rock_paper_scissors.envs:RockPaperScissorsBiasedPolicyEnv"
 )
+
+register(
+    id="RockPaperScissorsSequencePolicy2Env-v0",
+    entry_point="gym_rock_paper_scissors.envs:RockPaperScissorsSequencePolicyEnv"
+)

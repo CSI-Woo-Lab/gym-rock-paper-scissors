@@ -1,4 +1,4 @@
-from gym_rock_paper_scissors.envs.rock_paper_scissors import RockPaperScissorsBaseEnv, RockPaperScissorsRandomPolicyEnv, RockPaperScissorsSequencePolicyEnv, RockPaperScissorsBiasedPolicyEnv
+from gym_rock_paper_scissors.envs.rock_paper_scissors import RockPaperScissorsBaseEnv, RockPaperScissorsRandomPolicyEnv, RockPaperScissorsSequencePolicyEnv, RockPaperScissorsBiasedPolicyEnv, RockPaperScissorsSequencePolicy2Env
 
 
 def eval_rock_paper_scissors_agent(agent, env: RockPaperScissorsBaseEnv, deterministic=False, n_eval_episode=1000):
@@ -8,6 +8,8 @@ def eval_rock_paper_scissors_agent(agent, env: RockPaperScissorsBaseEnv, determi
         optimal_winning_rate = RockPaperScissorsRandomPolicyEnv.optimal_winning_rate
     elif type(env).__name__ == "RockPaperScissorsBiasedPolicyEnv":
         optimal_winning_rate = RockPaperScissorsBiasedPolicyEnv.optimal_winning_rate
+    elif type(env).__name__ == "RockPaperScissorsSequencePolicyEnv":
+        optimal_winning_rate = RockPaperScissorsSequencePolicy2Env.optimal_winning_rate
     else:
         raise TypeError("env type is not matched")
 

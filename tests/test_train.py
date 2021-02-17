@@ -7,7 +7,7 @@ import os
 
 # install custom env using pip first
 
-sequence_env = gym.make("RockPaperScissorsSequencePolicyEnv-v0", other_sequence=True)
+sequence_env = gym.make("RockPaperScissorsSequencePolicy2Env-v0", other_sequence=True)
 random_env = gym.make("RockPaperScissorsRandomPolicyEnv-v0")
 biased_env = gym.make("RockPaperScissorsBiasedPolicyEnv-v0")
 

@@ -5,6 +5,7 @@ from gym import spaces
 ROCK = 0
 PAPER = 1
 SCISSORS = 2
+NULL_ACTION = 3
 RENDER_MAP = {0: "@", 1: "#", 2: "%"}
 
 
@@ -40,7 +41,7 @@ class RockPaperScissorsBaseEnv(gym.Env):
 
     def reset(self):
         self.prev_obs = None
-        return np.array([3])
+        return np.array([NULL_ACTION])
 
     def render(self, mode="human"):
         user = RENDER_MAP[self.prev_action]
@@ -109,7 +110,53 @@ class RockPaperScissorsBiasedPolicyEnv(RockPaperScissorsBaseEnv):
 
 
 class RockPaperScissorsSequencePolicy2Env(RockPaperScissorsBaseEnv):
-    pass
+    optimal_winning_rate = 1
+
+    def __init__(self, start_with=PAPER, other_sequence=False, double_with=ROCK) -> None:
+        super().__init__()
+        self.start_with = start_with
+        self.other_sequence = other_sequence
+        self.double_with = double_with
+        self.double_flag = False
+
+    def reset(self):
+        self.double_flag = False
+        return super().reset()
+
+    def env_policy(self, obs):
+        if obs == None:
+            env_action = self.start_with
+        elif obs == ROCK:
+            if self.double_with == ROCK and not self.double_flag:
+                env_action = ROCK
+                self.double_flag = True
+            else:
+                self.double_flag = False
+                if self.other_sequence:
+                    env_action = SCISSORS
+                else:
+                    env_action = PAPER
+        elif obs == PAPER:
+            if self.double_with == PAPER and not self.double_flag:
+                env_action = PAPER
+                self.double_flag = True
+            else:
+                self.double_flag = False
+                if self.other_sequence:
+                    env_action = ROCK
+                else:
+                    env_action = SCISSORS
+        elif obs == SCISSORS:
+            if self.double_with == SCISSORS and not self.double_flag:
+                env_action = SCISSORS
+                self.double_flag = True
+            else:
+                self.double_flag = False
+                if self.other_sequence:
+                    env_action = PAPER
+                else:
+                    env_action = ROCK
+        return env_action
 
 
 if __name__ == "__main__":
