@@ -21,5 +21,5 @@ register(
 
 register(
     id="RockPaperScissorsSequencePolicy2Env-v0",
-    entry_point="gym_rock_paper_scissors.envs:RockPaperScissorsSequencePolicyEnv"
+    entry_point="gym_rock_paper_scissors.envs:RockPaperScissorsSequencePolicy2Env"
 )
