@@ -1,8 +1,5 @@
 from gym.envs.registration import register
-
-ROCK = 0
-PAPER = 1
-SCISSORS = 2
+from gym_rock_paper_scissors.envs.rock_paper_scissors import ROCK, PAPER, SCISSORS, NULL_ACTION
 
 register(
     id="RockPaperScissorsSequencePolicyEnv-v0",
