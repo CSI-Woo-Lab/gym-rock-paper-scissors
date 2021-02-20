@@ -14,9 +14,7 @@ class RockPaperScissorsBaseEnv(gym.Env):
 
     def __init__(self) -> None:
         self.action_space = spaces.Discrete(3)
-
-        # previous user action, previous env action
-        self.observation_space = spaces.Discrete(4)
+        self.observation_space = spaces.Discrete(4)  # represent NULL_ACTION
 
     def step(self, action):
         info = {}
